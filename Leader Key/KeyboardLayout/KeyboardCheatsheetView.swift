@@ -58,7 +58,10 @@ struct KeyboardCheatsheetView: View {
     }
     .padding(16 * scale)
     .background(
-      VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+      ZStack {
+        VisualEffectView(material: .popover, blendingMode: .behindWindow)
+        Color(NSColor.windowBackgroundColor).opacity(0.7)
+      }
     )
   }
 }

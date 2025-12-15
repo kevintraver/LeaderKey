@@ -90,7 +90,10 @@ struct CheatsheetView: SwiftUI.View {
     .frame(width: CheatsheetView.preferredWidth)
     .frame(height: min(contentHeight, maxHeight))
     .background(
-      VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+      ZStack {
+        VisualEffectView(material: .popover, blendingMode: .behindWindow)
+        Color(NSColor.windowBackgroundColor).opacity(0.7)
+      }
     )
     .onPreferenceChange(HeightPreferenceKey.self) { height in
       self.contentHeight = height
