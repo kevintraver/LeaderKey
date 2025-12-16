@@ -161,14 +161,16 @@ enum KeyboardLayout {
     KeyDefinition(label: "⇧", key: "shift_r", width: 2.75, isModifier: true),
   ]
 
-  // Row 4: Ctrl Opt Cmd Space Cmd Opt (total: 15u)
+  // Row 4: Ctrl Opt Cmd Space Cmd Opt Ctrl (total: 15u)
+  // Spacebar aligned with C key (left edge) and comma key (right edge)
+  // Right Cmd and Opt meet under center of slash key
   static let row4: [KeyDefinition] = [
     KeyDefinition(label: "⌃", key: "ctrl", width: 1.5, isModifier: true),
     KeyDefinition(label: "⌥", key: "opt", width: 1.25, isModifier: true),
     KeyDefinition(label: "⌘", key: "cmd", width: 1.5, isModifier: true),
-    KeyDefinition(label: "", key: "space", width: 6.5),
+    KeyDefinition(label: "", key: "space", width: 6.0),
     KeyDefinition(label: "⌘", key: "cmd_r", width: 1.5, isModifier: true),
-    KeyDefinition(label: "⌥", key: "opt_r", width: 1.25, isModifier: true),
-    KeyDefinition(label: "⌃", key: "ctrl_r", width: 1.5, isModifier: true),
+    KeyDefinition(label: "⌥", key: "opt_r", width: 1.5, isModifier: true),
+    KeyDefinition(label: "⌃", key: "ctrl_r", width: 1.75, isModifier: true),
   ]
 }
