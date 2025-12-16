@@ -48,7 +48,7 @@ struct KeyView: View {
         // Binding icon (centered)
         if let binding = binding {
           VStack {
-            actionIcon(item: binding, iconSize: iconSize, loadFavicons: false)
+            actionIcon(item: binding, iconSize: iconSize, loadFavicons: true)
           }
           .overlay {
             if isHovered, let label = bindingLabel {
