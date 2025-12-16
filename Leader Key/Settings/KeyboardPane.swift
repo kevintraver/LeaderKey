@@ -19,6 +19,7 @@ struct UnifiedEditorView: View {
   var onDelete: (ActionOrGroup) -> Void
   var onOpenLayout: (ActionOrGroup) -> Void
 
+  @Environment(\.dismiss) private var dismiss
   @State private var showIconPicker = false
 
   // Temporary state to hold values when switching types
@@ -188,31 +189,7 @@ struct UnifiedEditorView: View {
           }
         } else {
           // Group Mode
-          VStack(spacing: 16) {
-            if case .group = item {
-              Button {
-                let updated = getUpdatedItem()
-                item = updated
-                onSave(updated)
-                onOpenLayout(updated)
-              } label: {
-                HStack {
-                  Image(systemName: "square.grid.3x3")
-                  Text("Edit Group Layout")
-                }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 4)
-              }
-              .buttonStyle(.borderedProminent)
-              .controlSize(.large)
-
-              Text("Assign actions to keys within this group.")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-            }
-          }
-          .padding(.top, 10)
+          Spacer()
         }
       }
       .padding(.horizontal, 24)
@@ -221,7 +198,16 @@ struct UnifiedEditorView: View {
 
       // Footer
       HStack {
-        if !isNew {
+        if selectedType == .group {
+          // Group mode: Cancel button
+          Button("Cancel") {
+            dismiss()
+          }
+          .keyboardShortcut(.cancelAction)
+          .buttonStyle(.bordered)
+          .controlSize(.regular)
+        } else if !isNew {
+          // Action mode: Delete button
           Button(role: .destructive) {
             onDelete(item)
           } label: {
@@ -235,10 +221,13 @@ struct UnifiedEditorView: View {
 
         Spacer()
 
-        Button("Done") {
+        Button(selectedType == .group ? "Assign Actions" : "Done") {
           let updated = getUpdatedItem()
           item = updated
           onSave(updated)
+          if selectedType == .group {
+            onOpenLayout(updated)
+          }
         }
         .keyboardShortcut(.defaultAction)
         .buttonStyle(.borderedProminent)
