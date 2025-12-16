@@ -33,16 +33,27 @@ struct KeyboardCheatsheetView: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 8 * scale) {
-      // Fixed height header area - always present to maintain layout
-      HStack {
-        if let group = userState.currentGroup {
-          Text(group.displayName)
-            .font(.system(size: 12 * scale, weight: .semibold))
-            .foregroundColor(.white)
-            .padding(.horizontal, 8 * scale)
-            .padding(.vertical, 4 * scale)
-            .background(Color.accentColor.opacity(0.8))
-            .clipShape(RoundedRectangle(cornerRadius: 6 * scale, style: .continuous))
+      // Breadcrumbs navigation
+      HStack(spacing: 4 * scale) {
+        if !userState.navigationPath.isEmpty {
+          ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 4 * scale) {
+              // Path breadcrumbs
+              ForEach(0..<userState.navigationPath.count, id: \.self) { index in
+                if index > 0 {
+                  Text(">")
+                    .foregroundColor(.secondary)
+                    .font(.system(size: 12 * scale))
+                }
+
+                let group = userState.navigationPath[index]
+                let isLast = index == userState.navigationPath.count - 1
+
+                Text(group.displayName)
+                  .font(.system(size: 12 * scale, weight: isLast ? .bold : .regular))
+              }
+            }
+          }
         }
         Spacer()
       }
