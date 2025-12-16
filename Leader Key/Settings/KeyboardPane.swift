@@ -546,68 +546,79 @@ struct KeyboardPane: View {
       Settings.Section(title: "", bottomDivider: true) {
         VStack(alignment: .leading, spacing: 12) {
           // Breadcrumbs & Header
-          HStack(spacing: 4) {
-            if !currentGroupPath.isEmpty {
-              ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 4) {
-                  // Root breadcrumb
-                  Button {
-                    currentGroupPath.removeAll()
-                  } label: {
-                    Text("Root")
-                  }
-                  .buttonStyle(.bordered)
+          HStack(spacing: 0) {
+            // Calculate keyboard left offset to align breadcrumbs with ` key
+            let keyboardWidth = KeyboardLayout.totalWidth * maxKeyboardScale
+            let centerOffset = (contentWidth - keyboardWidth) / 2
+            let leftOffset = max(0, centerOffset - 4)
+            let rightOffset = max(0, centerOffset - 4)
 
-                  // Path breadcrumbs
-                  ForEach(0..<currentGroupPath.count, id: \.self) { index in
-                    Text(">")
-                      .foregroundColor(.secondary)
+            Spacer()
+              .frame(width: leftOffset)
 
-                    let id = currentGroupPath[index]
-                    let name = getGroupName(for: id)
-                    let isLast = index == currentGroupPath.count - 1
+            HStack(spacing: 4) {
+              if !currentGroupPath.isEmpty {
+                ScrollView(.horizontal, showsIndicators: false) {
+                  HStack(spacing: 4) {
+                    // Root breadcrumb
+                    Button {
+                      currentGroupPath.removeAll()
+                    } label: {
+                      Image(systemName: "house.fill")
+                    }
 
-                    if isLast {
-                      // Current location - show as bold text, not a button
-                      Text(name)
-                        .fontWeight(.bold)
-                    } else {
-                      Button {
-                        currentGroupPath = Array(
-                          (currentGroupPath as [UUID]).prefix(index + 1)
-                        )
-                      } label: {
+                    // Path breadcrumbs
+                    ForEach(0..<currentGroupPath.count, id: \.self) { index in
+                      Text(">")
+                        .foregroundColor(.secondary)
+
+                      let id = currentGroupPath[index]
+                      let name = getGroupName(for: id)
+                      let isLast = index == currentGroupPath.count - 1
+
+                      if isLast {
+                        // Current location - show as bold text, not a button
                         Text(name)
+                          .fontWeight(.bold)
+                      } else {
+                        Button {
+                          currentGroupPath = Array(
+                            (currentGroupPath as [UUID]).prefix(index + 1)
+                          )
+                        } label: {
+                          Text(name)
+                        }
                       }
-                      .buttonStyle(.bordered)
                     }
                   }
                 }
-              }
 
-              Spacer()
+                Spacer()
 
-              // Edit Current Group Button
-              Button {
-                editingGroupWrapper = GroupWrapper(group: currentGroup)
-              } label: {
-                Image(systemName: "gearshape")
-                  .foregroundColor(.secondary)
-              }
-              .buttonStyle(.borderless)
-              .help("Edit Group Settings")
-            } else {
-              // Invisible button to maintain consistent height with breadcrumb view
-              Button {
-              } label: {
-                Text("Root")
-              }
-              .buttonStyle(.bordered)
-              .opacity(0)
-              .disabled(true)
+                // Edit Current Group Button
+                Button {
+                  editingGroupWrapper = GroupWrapper(group: currentGroup)
+                } label: {
+                  Image(systemName: "gearshape")
+                    .foregroundColor(.secondary)
+                }
+                .buttonStyle(.borderless)
+                .help("Edit Group Settings")
+              } else {
+                // Invisible button to maintain consistent height with breadcrumb view
+                Button {
+                } label: {
+                  Image(systemName: "house.fill")
+                }
+                .opacity(0)
+                .disabled(true)
 
-              Spacer()
+                Spacer()
+              }
             }
+
+            Spacer()
+              .frame(width: rightOffset)
           }
           .frame(height: 24)
 
