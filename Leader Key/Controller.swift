@@ -300,11 +300,15 @@ class Controller {
       return
     }
 
-    let screenFrame = screen.visibleFrame
+    let screenCenter = screen.center()
     let cheatsheetFrame = cheatsheet.frame
 
-    let x = screenFrame.origin.x + (screenFrame.width - cheatsheetFrame.width) / 2
-    let y = screenFrame.origin.y + (screenFrame.height - cheatsheetFrame.height) / 2
+    // Match the vertical offset used by themes (slightly above center)
+    // Most themes use: center.y + windowSize / 8
+    let verticalOffset: CGFloat = cheatsheetFrame.height / 8
+
+    let x = screenCenter.x - cheatsheetFrame.width / 2
+    let y = screenCenter.y - cheatsheetFrame.height / 2 + verticalOffset
 
     cheatsheet.setFrameOrigin(NSPoint(x: x, y: y))
   }
@@ -344,19 +348,25 @@ class Controller {
       userState.cheatsheetCentered = true
       sizeCheatsheetWindowToFitContent()
       centerCheatsheetWindow()
+      cheatsheetWindow?.orderFront(nil)
+
+      // Re-center after SwiftUI has finished laying out
+      DispatchQueue.main.async { [weak self] in
+        self?.sizeCheatsheetWindowToFitContent()
+        self?.centerCheatsheetWindow()
+
+        // Final centering pass to ensure accuracy
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) { [weak self] in
+          self?.sizeCheatsheetWindowToFitContent()
+          self?.centerCheatsheetWindow()
+        }
+      }
     } else {
       cheatsheetWindow?.setContentSize(
         NSSize(width: CheatsheetView.preferredWidth, height: 640)
       )
       positionCheatsheetWindow()
-    }
-    cheatsheetWindow?.orderFront(nil)
-
-    if centered {
-      DispatchQueue.main.async { [weak self] in
-        self?.sizeCheatsheetWindowToFitContent()
-        self?.centerCheatsheetWindow()
-      }
+      cheatsheetWindow?.orderFront(nil)
     }
   }
 
