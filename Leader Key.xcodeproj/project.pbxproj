@@ -62,6 +62,8 @@
 		6D9B9C012DBA000000000001 /* ConfigOutlineEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9B9C002DBA000000000001 /* ConfigOutlineEditorView.swift */; };
 		6D9B9C042DBA000000000002 /* KeyCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9B9C032DBA000000000002 /* KeyCapture.swift */; };
 		6D9B9C062DBA000000000003 /* ConfigEditorShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D9B9C052DBA000000000003 /* ConfigEditorShared.swift */; };
+		CC0000012E9A000000000008 /* StatsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0000012E9A000000000007 /* StatsManager.swift */; };
+		CC0000012E9A00000000000A /* StatsPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC0000012E9A000000000009 /* StatsPane.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -128,6 +130,8 @@
 		6D9B9C002DBA000000000001 /* ConfigOutlineEditorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigOutlineEditorView.swift; sourceTree = "<group>"; };
 		6D9B9C032DBA000000000002 /* KeyCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyCapture.swift; sourceTree = "<group>"; };
 		6D9B9C052DBA000000000003 /* ConfigEditorShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigEditorShared.swift; sourceTree = "<group>"; };
+		CC0000012E9A000000000007 /* StatsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsManager.swift; sourceTree = "<group>"; };
+		CC0000012E9A000000000009 /* StatsPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsPane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +177,7 @@
 				427C18242BD31E2E00955B98 /* GeneralPane.swift */,
 				42FDC3192D51687B004F5C5C /* AdvancedPane.swift */,
 				428483532E813219009D7EEF /* KeyboardPane.swift */,
+				CC0000012E9A000000000009 /* StatsPane.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -195,6 +200,14 @@
 				4284835B2E813221009D7EEF /* CheatsheetRows.swift */,
 			);
 			path = Cheatsheet;
+			sourceTree = "<group>";
+		};
+		CC0000012E9A000000000004 /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				CC0000012E9A000000000007 /* StatsManager.swift */,
+			);
+			path = Stats;
 			sourceTree = "<group>";
 		};
 		427C17DE2BD311B400955B98 = {
@@ -243,6 +256,7 @@
 				4284835C2E813222009D7EEF /* Cheatsheet */,
 				428483552E81321B009D7EEF /* KeyboardLayout */,
 				423632242D68CC5D00878D92 /* Settings */,
+				CC0000012E9A000000000004 /* Stats */,
 				427C18362BD3243C00955B98 /* Support */,
 				423632232D68CB0F00878D92 /* Themes */,
 				427C18392BD3268000955B98 /* Views */,
@@ -487,6 +501,8 @@
 				428483562E81321C009D7EEF /* KeyView.swift in Sources */,
 				428483582E81321E009D7EEF /* KeyBadge.swift in Sources */,
 				4284835A2E813220009D7EEF /* CheatsheetRows.swift in Sources */,
+				CC0000012E9A000000000008 /* StatsManager.swift in Sources */,
+				CC0000012E9A00000000000A /* StatsPane.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
