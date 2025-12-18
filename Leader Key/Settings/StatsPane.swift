@@ -19,11 +19,13 @@ struct StatsPane: View {
           // Header
           HStack(alignment: .center) {
             Text("Usage Stats")
-              .font(.system(size: 20, weight: .medium))
+              .font(.headline)
             Spacer()
             Text("\(totalExecutions) total")
-              .foregroundColor(.secondary)
-              .font(.body)
+              .foregroundColor(.primary)
+              .font(.system(.body, design: .rounded))
+              .fontWeight(.medium)
+              .monospacedDigit()
           }
           .padding(.bottom, 8)
 
@@ -264,11 +266,11 @@ private struct GroupStatsRow: View {
                 .foregroundColor(.secondary)
                 .rotationEffect(.degrees(isExpanded ? 90 : 0))
                 .animation(.easeInOut(duration: 0.2), value: isExpanded)
-                .frame(width: 20)
+                .frame(width: 14)
 
               // Key badge
               KeyBadgeView(key: group.groupKey)
-                .padding(.leading, 8)
+                .padding(.leading, 4)
 
               // Group name
               Text(group.groupLabel)
@@ -282,7 +284,7 @@ private struct GroupStatsRow: View {
               HStack(spacing: 0) {
                 // Progress bar
                 ProgressBarView(value: group.totalCount, max: maxCount)
-                  .padding(.trailing, 16)
+                  .padding(.trailing, 20)
 
                 // Folder icon
                 Image(systemName: "folder")
@@ -296,14 +298,14 @@ private struct GroupStatsRow: View {
                   .foregroundColor(.primary)
                   .font(.system(.body, design: .rounded))
                   .fontWeight(.medium)
-                  .monospacedDigit()
-                  .frame(width: 36, alignment: .trailing)
-              }
-            }
-            .padding(.vertical, 8)
-            .padding(.horizontal, 12)
-            .background(
-              RoundedRectangle(cornerRadius: 8)
+                                  .monospacedDigit()
+                                  .frame(width: 36, alignment: .trailing)
+                              }
+                            }
+                            .padding(.trailing, 18)
+                            .padding(.vertical, 8)
+                            .padding(.horizontal, 8)
+                            .background(              RoundedRectangle(cornerRadius: 8)
                 .fill(Color.secondary.opacity(0.1))
             )
             .contentShape(Rectangle())
@@ -362,12 +364,12 @@ private struct ActionStatsRow: View {
     HStack(alignment: .center, spacing: 0) {
       // Indent spacer (add extra indent since no chevron)
       Spacer()
-        .frame(width: indentPerLevel * CGFloat(depth) + 20)
+        .frame(width: indentPerLevel * CGFloat(depth) + 14)
 
       // Key badge
       if let lastKey = stat.pathComponents.last {
         KeyBadgeView(key: lastKey)
-          .padding(.leading, 8)
+          .padding(.leading, 4)
       }
 
       // Action name
@@ -383,7 +385,7 @@ private struct ActionStatsRow: View {
       HStack(spacing: 0) {
         // Progress bar
         ProgressBarView(value: stat.action.executionCount, max: maxCount)
-          .padding(.trailing, 16)
+          .padding(.trailing, 20)
 
         // Icon
         ActionIconView(actionType: stat.action.actionType, actionValue: stat.action.actionValue)
@@ -397,8 +399,9 @@ private struct ActionStatsRow: View {
           .frame(width: 36, alignment: .trailing)
       }
     }
+    .padding(.trailing, 18)
     .padding(.vertical, 8)
-    .padding(.horizontal, 12)
+    .padding(.horizontal, 8)
     .contentShape(Rectangle())
   }
 
