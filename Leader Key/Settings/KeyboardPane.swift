@@ -544,17 +544,10 @@ struct KeyboardPane: View {
   var body: some View {
     Settings.Container(contentWidth: contentWidth) {
       Settings.Section(title: "", bottomDivider: true) {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .center, spacing: 12) {
           // Breadcrumbs & Header
           HStack(spacing: 0) {
-            // Calculate keyboard left offset to align breadcrumbs with ` key
             let keyboardWidth = KeyboardLayout.totalWidth * maxKeyboardScale
-            let centerOffset = (contentWidth - keyboardWidth) / 2
-            let leftOffset = max(0, centerOffset - 4)
-            let rightOffset = max(0, centerOffset - 4)
-
-            Spacer()
-              .frame(width: leftOffset)
 
             HStack(spacing: 4) {
               if !currentGroupPath.isEmpty {
@@ -616,20 +609,16 @@ struct KeyboardPane: View {
                 Spacer()
               }
             }
-
-            Spacer()
-              .frame(width: rightOffset)
+            .frame(width: keyboardWidth)
           }
           .frame(height: 24)
 
-          HStack(spacing: 0) {
-            Spacer()
-            KeyboardLayoutView(
-              bindings: bindings,
-              isEditable: false,
-              shiftHeld: shiftHeld || stickyShiftMode,
-              scale: maxKeyboardScale,
-              onKeySelected: { key in
+          KeyboardLayoutView(
+            bindings: bindings,
+            isEditable: false,
+            shiftHeld: shiftHeld || stickyShiftMode,
+            scale: maxKeyboardScale,
+            onKeySelected: { key in
                 if key == "shift" || key == "shift_r" {
                   stickyShiftMode.toggle()
                   return
@@ -671,8 +660,6 @@ struct KeyboardPane: View {
                 }
               }
             )
-            Spacer()
-          }
 
           Text("Click any key to configure")
             .font(.body)

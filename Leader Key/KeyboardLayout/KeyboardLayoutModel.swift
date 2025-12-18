@@ -84,7 +84,8 @@ enum KeyboardLayout {
   /// Calculate width of a row
   static func rowWidth(_ row: [KeyDefinition]) -> CGFloat {
     let totalUnits = row.reduce(0) { $0 + $1.width }
-    return totalUnits * keySize + (totalUnits - 1) * keySpacing
+    let totalGaps = CGFloat(max(0, row.count - 1))
+    return totalUnits * keySize + totalGaps * keySpacing
   }
 
   /// All keyboard rows
