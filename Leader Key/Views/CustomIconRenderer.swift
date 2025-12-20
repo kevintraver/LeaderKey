@@ -2,6 +2,7 @@ import AppKit
 
 enum CustomIconRenderer {
   static let cornerRadiusFactor: CGFloat = 0.2237
+  static let contentScale: CGFloat = 0.84
 
   static func isCustomImagePath(_ path: String) -> Bool {
     var isDirectory: ObjCBool = false
@@ -24,8 +25,13 @@ enum CustomIconRenderer {
     outputImage.lockFocus()
     defer { outputImage.unlockFocus() }
 
-    let destRect = NSRect(origin: .zero, size: targetSize)
-    let cornerRadius = min(size.width, size.height) * cornerRadiusFactor
+    // Scale down the icon content to match app bundle icon sizing
+    let scaledWidth = size.width * contentScale
+    let scaledHeight = size.height * contentScale
+    let inset = (size.width - scaledWidth) / 2
+    let destRect = NSRect(x: inset, y: inset, width: scaledWidth, height: scaledHeight)
+
+    let cornerRadius = min(scaledWidth, scaledHeight) * cornerRadiusFactor
     let clipPath = NSBezierPath(roundedRect: destRect, xRadius: cornerRadius, yRadius: cornerRadius)
     clipPath.addClip()
 
