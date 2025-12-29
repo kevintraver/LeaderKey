@@ -203,7 +203,11 @@ class Controller {
           StatsManager.shared.recordGroupNavigation(group: group, keyPath: keyPath)
         }
 
-        userState.display = group.key
+        // Only update display hint when not in centered cheatsheet mode
+        // (the keyboard cheatsheet already shows navigation via breadcrumbs)
+        if !isCheatsheetCentered {
+          userState.display = group.key
+        }
         userState.navigateToGroup(group)
       }
     case .none:
